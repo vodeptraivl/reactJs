@@ -99,7 +99,7 @@ class System extends React.Component{
     onUpdateSystem = async () => {
         try {
             const result = await axios.post("http://localhost:8080/system",this.state.rowData)
-            this.setState({rowData:result.data.dataList})
+            
           } catch (error) {
             console.error(error);
           }
