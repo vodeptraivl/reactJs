@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE logback>
+
+<configuration debug="true" scan="true">
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<Target>System.out</Target>
+		<encoder>
+			<pattern>%d{yyyy-MMM-dd HH:mm:ss.SSS,UTC} [%thread] [%level] %logger %message%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d{yyyy-MMM-dd HH:mm:ss.SSS'UTC',UTC} [%thread] [%level] %logger %message%n</pattern>
+		</encoder>
+
+		<File>./PERMISION/logFile.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>./PERMISION/logFile.%d{yyyy-MM-dd}.zip</FileNamePattern>
+			<MaxHistory>60</MaxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="org.springframework" level="INFO" additivity="false"/>
+	<logger name="org.springframework" level="ERROR" additivity="true"/>
+	<logger name="org.apache.catalina" level="INFO" additivity="false"/>
+	<logger name="org.apache.catalina" level="ERROR" additivity="true"/>
+	<logger name="org.apache.tomcat" level="INFO" additivity="false"/>
+	<logger name="org.apache.coyote" level="INFO" additivity="false"/>
+	<logger name="org.hibernate.validator" level="INFO" additivity="false"/>
+	<logger name="jp.co.muratec" level="INFO" additivity="false"/>
+	<logger name="jp.co.muratec" level="ERROR" additivity="true"/>
+	<logger name="org.apache.ibatis" level="INFO" additivity="false"/>
+	<logger name="org.apache.ibatis" level="ERROR" additivity="true"/>
+	<logger name="java.sql" level="INFO"/>
+	
+	<!-- ** turn off param : additivity="false" -->
+	
+	<!-- (1) SQL QUERY -->
+	<logger name="jdbc.sqlonly" level="INFO" />
+	
+	<!-- (2) log SQL CONNECTION -->
+	<logger name="jdbc.connection" level="INFO" additivity="false"/>
+	
+	<!-- (3) log SET PARAM FOR RESULT MODEL -->
+	<logger name="jdbc.resultset" level="INFO" additivity="false"/>
+	
+	<!-- (4) log SET PARAM FOR QUERY -->
+	<logger name="jdbc.audit" level="INFO" additivity="false"/>
+	
+	<!-- (5) SQL QUERY AND Time excute of SQL -->
+	<logger name="jdbc.sqltiming" level="INFO" additivity="false" />
+	
+	<!-- (6) result of query -->
+	<logger name="jdbc.resultsettable" level="INFO" additivity="false"/>
+	
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

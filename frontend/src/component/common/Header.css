@@ -1,0 +1,47 @@
+.Header{
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    font-size: 12px;
+    background-image: linear-gradient(to top left,#0084e7,#003b68);
+    color: white;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.Creater{
+    position: absolute;
+    right: 10px;
+}
+
+.ClearCookie{
+    position: absolute;
+    right: 50px;
+    cursor: pointer;
+    color: #ffc4c4;
+
+}
+
+.ClearCookie:hover{
+    color: red;
+}
+
+.ClearCookie .fa-trash{
+    margin-right: 5px;
+}
+.Applogo{
+    width: 30px;
+    top: 4px;
+    position: relative;
+}
+
+.inputTest{
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #cecece;
+}
+

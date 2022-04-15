@@ -1,0 +1,25 @@
+.aggrid{
+    height: calc(100%  - 50px);
+
+}
+
+.ag-header-cell-text{
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+
+.containerSystem{
+    width: calc(100% - 200px);
+    height: calc(100vh - 30px);
+    margin-top: 30px;
+}
+
+.btnContainer{
+    height: 45px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    text-align: left;
+    line-height: 45px;
+}

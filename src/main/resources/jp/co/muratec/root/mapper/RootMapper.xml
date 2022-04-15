@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.muratec.root.mapper.RootMapper">
+	<!-- login -->
+	<select id="login" resultType="jp.co.muratec.root.domain.RootHistoryDomain">
+		SELECT
+		CBV_USRINF.USRID,
+		CBV_USRINF.USRNM,
+		CBV_USRINF.DPMTCD,
+		CBV_USRINF.DPMTNM
+		FROM CBV_USRINF
+		WHERE
+		CBV_USRINF.USRID = #{_userId,jdbcType=VARCHAR,mode=IN}
+	</select>
+</mapper>

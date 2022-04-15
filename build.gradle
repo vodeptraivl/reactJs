@@ -1,0 +1,65 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.22.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+apply plugin: 'application'
+
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "http://repository.aspose.com/repo/" }
+}
+
+configurations {
+	providedRuntime
+}
+
+run {
+	main 'jp.co.muratec.CollaboApp'
+}
+ext{
+	warname = 'ROOT'
+	baseHref = "/" 
+}
+dependencies {
+	compile('commons-io:commons-io:2.6')
+	compile('com.aspose:aspose-cells:19.4')
+	compile('org.apache.poi:poi:4.0.1')
+	compile('org.apache.poi:ooxml-schemas:1.4')
+	compile('org.apache.poi:poi-ooxml:4.0.1')
+	compile('org.jclarion:image4j:0.7')
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1')
+	compileOnly('org.projectlombok:lombok')
+	compile('org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-security')	
+	compile files("lib/ojdbc6.jar")
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+task copyFrontend(type: Copy, dependsOn:'frontend:build') {
+  from 'frontend/build/'
+  into 'build/resources/main/static/'
+}
+
+war {
+    archiveName = warname+'.war'
+    dependsOn(copyFrontend)
+}

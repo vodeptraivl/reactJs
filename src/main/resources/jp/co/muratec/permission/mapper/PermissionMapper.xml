@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="jp.co.muratec.permission.mapper.PermissionMapper">    
+
+    <select id="getSystems" resultType="jp.co.muratec.permission.domain.System">
+    	SELECT * FROM CBM_SSYSTEM
+    </select>
+    
+    <sql id="systemsData">
+		  WITH systemsData AS ( 
+		   <foreach collection="_system" item="_item" index="index" open="SELECT " separator=" FROM DUAL UNION ALL SELECT " close=" FROM DUAL">
+			   CAST(#{_item.ssystemId,jdbcType=VARCHAR,mode=IN} AS varchar(200)) ssystemId
+		   	  ,CAST(#{_item.ssystemNm,jdbcType=VARCHAR,mode=IN} AS varchar(200)) ssystemNm
+			  ,CAST(#{_item.authId,jdbcType=VARCHAR,mode=IN} AS varchar(200)) authId
+		   </foreach>
+		  ) 
+		  SELECT DISTINCT * FROM systemsData
+    </sql>
+    
+    <update id="updateSystemData">
+		MERGE INTO CBM_SSYSTEM
+        USING (
+         <include refid="systemsData"></include>
+        ) systemsData
+        ON (
+        	CBM_SSYSTEM.SSYSTEMID = systemsData.ssystemId
+        )
+        WHEN NOT MATCHED THEN 
+		INSERT (
+				SSYSTEMID	
+				,SECOSEQ	
+				,AUTHID	
+				,SSYSTEMNM	
+				,DSPNO	
+				,PRGUPD
+				,VERSION
+		) VALUES (
+			systemsData.ssystemId
+		  , 0
+		  , systemsData.authId
+		  , systemsData.ssystemNm
+		  , 0
+		  , 'REACTAPP'
+		  , 1
+		)
+	</update>
+</mapper>
