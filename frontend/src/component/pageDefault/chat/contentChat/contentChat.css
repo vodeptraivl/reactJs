@@ -1,12 +1,109 @@
 .containerChatContent{
     width: 100%;
-    height: 100%;
+    height: calc(100% - 35px);
     padding: 10px;
     box-shadow: inset 0px 0px 3px #cecece;
     border: 1px solid #cecece;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    overflow-y: auto;
 }
 .gridPad{
-    width: calc(100% - 410px);
+    width: 100%;
     height: 100%;
     padding: 5px;
+}
+.inputS{
+    width: 100%;
+    height: 35px;
+    box-sizing: border-box;
+    padding: 7px 0 0 0;
+    display: flex;
+}
+.inputS input{
+    width: calc(100% - 50px);
+    height: 25px;
+    padding: 0 5px;
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    outline: none;
+    padding: 0 10px;
+    color: #555555;
+}
+
+.inputS button{
+    height: 25px;
+    width: 45px;
+    margin-left: 5px;
+    background-color: #f73e3e;
+    color: white;
+    border: 1px solid #f73e3e;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+.inputS button:hover,
+.inputS input:focus{
+    box-shadow:  1px 1px 5px #cecece;
+}
+
+.messageItem{
+    width: 100%;
+    position: relative;
+    min-height: 31px;
+    margin-bottom: 5px;
+}
+
+.messageItem .right{
+    display: inline-block;
+    padding: 5px;
+    border-radius: 8px 8px 0px 8px;
+    background-image: linear-gradient(to right, #434343 0%, black 100%);
+    color: white;
+    box-shadow: 0px 0px 3px #cecece;
+}
+
+.messageItem .left{
+    padding: 5px;
+    border-radius: 8px 8px 8px 0px;
+    color: white;
+    box-shadow: 0px 0px 3px #cecece;
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    display: inline-flex;
+}
+.otherUser{
+    padding: 0 5px;
+    color: black;
+    border-radius: 4px 4px 4px 0px;
+    margin-right: 10px;
+    background-image: linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%);
+    max-height: 25px;
+    white-space: nowrap;
+}
+.messageItem.right{
+    text-align: right;
+}
+.messageItem.left{
+    text-align: left;
+}
+
+/* width */
+.containerChatContent::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.containerChatContent::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+.containerChatContent::-webkit-scrollbar-thumb {
+    background: rgba(157, 195, 230, 1);
+}
+
+/* Handle on hover */
+.containerChatContent::-webkit-scrollbar-thumb:hover {
+    background: rgb(85, 155, 219);
 }

@@ -1,18 +1,24 @@
 import userInfo from './userInfo';
-
-const { configureStore } = require("@reduxjs/toolkit");
-
+import socketSlice from './socketSlice';
+const { configureStore , getDefaultMiddleware} = require("@reduxjs/toolkit");
 
 const rootReducer = {
-    userInfo : userInfo.reducer
+    userInfo : userInfo.reducer,
+    socketSlice : socketSlice.reducer
 }
 const rootAction = {
-    userInfo : userInfo.actions
+    userInfo : userInfo.actions,
+    socketSlice : socketSlice.actions
 }
 
 const store = configureStore({
     reducer: rootReducer,
-    action: rootAction
+    action: rootAction,
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+        serializableCheck: false,
+        }
+    ),
 })
 
 export default store

@@ -1,24 +1,55 @@
 .system{
-    width: 200px;
-    height: 100px;
-    text-align: center;
-    line-height: 100px;
     background-image: linear-gradient(to top left,#0084e7,#003b68);
-    margin-left: 5px;
-    margin-bottom: 5px;
+    color: #fff;
     cursor: pointer;
-    color: white;
     font-size: 30px;
     font-weight: 600;
+    height: 70px;
+    line-height: 70px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    text-align: center;
+    padding: 0 20px;
 }
-.containerSystem{
+.systems{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     padding-top: 5px;
     padding-right: 5px;
+    height: 50%;
+    overflow: hidden;
+    overflow-y: auto;
+    align-content: flex-start;
 }
 .system:hover{
     box-shadow: 5px 5px 10px #cecece;
     opacity: 0.8;
+}
+
+/* width */
+.systems::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.systems::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+.systems::-webkit-scrollbar-thumb {
+    background: rgba(157, 195, 230, 1);
+}
+
+/* Handle on hover */
+.systems::-webkit-scrollbar-thumb:hover {
+    background: rgb(85, 155, 219);
+}
+
+.chats{
+    height: 50%;
+    overflow: hidden;
+    border-top: 1px solid #cecece;
+    display: flex;
 }

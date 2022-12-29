@@ -46,6 +46,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
+    text-align: left;
 }
 .searchUser{
     width: 100%;

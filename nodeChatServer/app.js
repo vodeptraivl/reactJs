@@ -1,59 +1,46 @@
 var express = require('express');
-
+// const cors = require('cors');
 var app = express();
-app.use(express.static('public'));
-app.set('view engine','ejs');
-app.set('views','./views');
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
 
-var server = require('http').Server(app);
-var io = require('socket.io')(server,{path: 'vola/chat'});
-
-server.listen(process.env.PORT || 3000);
-var nameuser = [];
-
-io.on('connection',function(socket){
-    socket.on('client-sent-name',function(data){
-        console.log(socket)
-        if(nameuser.indexOf(data)>=0){
-            console.log("ton tai")
-        }else{
-            nameuser.push(data);
-            socket.Username = data;
-            socket.emit('Server-send-dk-tc', data  );
-            socket.broadcast.emit('Server-send-newuser', data);
-            io.sockets.emit("sv-send-ds-user",nameuser);
-        }
-    });
-   
-    socket.on('disconnect',function(){
-        if(socket.Username){
-            nameuser.splice(
-                nameuser.indexOf(socket.Username),1
-            );
-            socket.emit('Server-log-al',socket.Username);
-        }
-        socket.broadcast.emit("sv-send-ds-user", nameuser );
-        
-    });
-    socket.on('logout' ,function(){
-        nameuser.splice(
-            nameuser.indexOf(socket.Username),1
-        );
-        socket.broadcast.emit("sv-send-ds-user", nameuser );
-        socket.broadcast.emit('Server-log-al',socket.Username);
-        socket.emit('Server-logout','thanhcong');
-    });
-    socket.on('contentmess',function(data){
-        console.log(socket)
-        io.sockets.emit('sv-data-mess', socket.Username + ' : ádsad' + data  );
-    });
-    
-    
+    next();
 });
 
-app.get('/',function(req,res){
-    res.render('home');
-})
+app.use(express.static('public'));
+// app.set('view engine','ejs');
+// app.set('views','./views');
+
+var server = require('http').Server(app);
+
+var io = require('socket.io')(server,{path: '/vola/chat'});
+
+server.listen(process.env.PORT || 2000);
+
+
+
+var users = [];
+
+io.on('connection',function(socket){
+    let auth = socket.handshake.auth;
+    auth.idSocket = socket.id;
+    users.push(auth);
+    io.sockets.emit('newUsers',users);
+    socket.on('disconnect',_=>{
+        users = users.filter(x=>{return x.idSocket != socket.id});
+        io.sockets.emit('newUsers',users);
+        
+    });
+    socket.on('getAllUsers',_=>{
+        socket.emit('users',users);
+    });
+    socket.on('sendMessage',(message)=>{
+        io.sockets.emit('newMessage',{auth,message})
+    });
+});
 
 
 //io.sockets.emit; // all body can see

@@ -4,8 +4,12 @@ import './home.css';
 import { delAllCookie, GetStateName } from '../../commonJS/common'
 import Header from '../../component/pageDefault/header/header';
 import RightMenu from '../../component/rightTab/rightMenu';
+import UserListChat from '../../component/pageDefault/chat/userList/userList';
+import store from '../../commonJS/store';
+import ContentChat from '../pageDefault/chat/contentChat/contentChat';
 
 export default class Home extends React.Component{
+
     constructor(){
         super();
         this.state = {
@@ -19,13 +23,19 @@ export default class Home extends React.Component{
                 <div className="bodyContainer">
                     <RightMenu/>
                     <div className='containerSystem'>
-                        {
-                            this.state.rowData.map(x=>{
-                                if(x.ssystemNm.indexOf('.war') == -1){
-                                    return <div className='system' key={x.ssystemNm} onClick={()=>{this.handleClick(x.ssystemNm)}}>{x.ssystemNm}</div>
-                                }
-                            })
-                        }
+                        <div className='systems'>
+                            {
+                                this.state.rowData.map(x=>{
+                                    if(x.ssystemNm.indexOf('.war') == -1){
+                                        return <div className='system' key={x.ssystemNm} onClick={()=>{this.handleClick(x.ssystemNm)}}>{x.ssystemNm}</div>
+                                    }
+                                })
+                            }
+                        </div>
+                        <div className='chats'>
+                            <UserListChat />
+                            <ContentChat />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -35,8 +45,10 @@ export default class Home extends React.Component{
 
     componentDidMount(){
         this.getSystem()
+          
     }
 
+    
     getSystem = async () => {
         try {
           const result = await axios.get(`${this.props.url}tomcatsystem`)
@@ -48,6 +60,6 @@ export default class Home extends React.Component{
 
     handleClick = (system) =>{
         delAllCookie();
-        window.location.href = '/'+system
+        window.location.href = '/'+system;
     }
 }
