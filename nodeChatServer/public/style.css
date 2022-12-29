@@ -1,0 +1,95 @@
+body{
+    box-sizing: border-box;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+.top-header{
+    width: 100%;
+    height: 40px;
+}
+.dl-fl{
+    display: flex;
+}
+.tex-cent{
+    text-align: center;
+}
+.left,.right{
+    padding: 5px;
+}
+.left{
+    width: 30%;
+}
+.right{
+    width:50%;
+    padding: 5px;
+}
+.btn-re{
+    width: 20%;
+}
+.btn-re p{
+    cursor: pointer;
+}
+.input-header{
+    width: 100%;
+    font-size: 13px;
+    border:none;
+    border-bottom: 1px solid #888888;
+}
+.content-id p{
+    width: 70%;
+    padding: 3px;
+    background: rgb(228, 36, 87);
+    color: white;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+.content{
+    border-left: transparent;
+    height: 400px;
+    overflow-y: scroll;
+    padding: 20px
+}
+.content p{
+    font-size: 15px;
+    color: red;
+    margin: 0;
+}
+.btn-send{
+    cursor: pointer;
+}
+.hello-name{
+    cursor: pointer;
+    
+}
+.alertmss p{
+    color: #888888;
+}
+.chat-box{
+    max-height: 400px;
+    overflow: hidden;
+}
+.hello-name p{
+    width: 70%;
+    background :rgb(255, 173, 173);
+    margin: 0 auto;
+    color: white;
+    border-radius: 5px;
+    padding: 2px;
+}
