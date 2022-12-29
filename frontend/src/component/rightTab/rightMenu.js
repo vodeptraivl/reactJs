@@ -12,11 +12,15 @@ class RightMenu extends React.Component{
         return(
             <div className='rightMenu'>
                 <div className='itemMenu'>
-                    <Link to="/system">
+                    <Link to="/tuvung">
+                        900 Từ
+                    </Link>
+                </div>
+                <div className='itemMenu'>
+                    <Link to="/">
                         System
                     </Link>
                 </div>
-                <div className='itemMenu'>Auth Role</div>
             </div>
         );
     }

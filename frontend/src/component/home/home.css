@@ -1,0 +1,24 @@
+.system{
+    width: 200px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    background-image: linear-gradient(to top left,#0084e7,#003b68);
+    margin-left: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 30px;
+    font-weight: 600;
+}
+.containerSystem{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding-top: 5px;
+    padding-right: 5px;
+}
+.system:hover{
+    box-shadow: 5px 5px 10px #cecece;
+    opacity: 0.8;
+}

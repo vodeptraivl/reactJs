@@ -61,4 +61,34 @@ public class PermissionController {
 
 		return ResponseEntity.ok(response);
 	}
+
+	@RequestMapping(value="/tomcatsystem", method=RequestMethod.GET)
+	public ResponseEntity<ApiListResponseDomain<jp.co.muratec.permission.domain.System>> getTomcatSystems() throws Exception {
+		ApiListResponseDomain<jp.co.muratec.permission.domain.System> response = new ApiListResponseDomain<jp.co.muratec.permission.domain.System>();
+		try {
+			response.setResult(service.getTomcatSystems());
+		} catch (Exception e) {
+			logger.error("", e);
+			if (e instanceof SQLException || e instanceof SQLSyntaxErrorException || e instanceof BadSqlGrammarException
+					|| e instanceof PersistenceException || e.getMessage().toString().contains("ORA-")) {
+				return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+			} else {
+				return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		return ResponseEntity.ok(response);
+	}
+	
+	// @RequestMapping(value="/test", method=RequestMethod.GET)
+	// public String getA() throws Exception {
+	// 		return service.test();
+		
+	// }
+	
+	// @RequestMapping(value="/enryptPassword", method=RequestMethod.GET)
+	// public String enryptPassword(@RequestParam("pass") String pass )throws Exception {
+	// 		return service.enryptPassword(pass);
+		
+	// }
 }

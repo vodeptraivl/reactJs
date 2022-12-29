@@ -1,7 +1,7 @@
 .rightMenu{
     width: 200px;
-    height: calc(100vh - 30px);
-    margin-top: 30px;
+    height: calc(100vh - 50px);
+    margin-top: 50px;
     background: #e7f4ff;
 }
 
@@ -15,4 +15,9 @@
 }
 .itemMenu:hover{
     opacity: 1;
+}
+
+a{
+    text-decoration: none;
+    color: black;
 }
