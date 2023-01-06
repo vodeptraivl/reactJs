@@ -4,7 +4,8 @@ const socketSlice = createSlice({
     name: 'iov', 
     initialState:{
         sk: null,
-        id:''
+        id:'',
+        urlSocket : "http://localhost:2000",
     },
     reducers: { 
         setSK : (state, action) =>{

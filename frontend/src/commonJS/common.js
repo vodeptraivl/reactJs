@@ -19,7 +19,13 @@ export function delAllCookie() {
     var cookies = document.cookie.split(";");
     for (var i = 0; i < cookies.length; i++) {
         var cookie = cookies[i];
-        if (cookie.indexOf('lang') > -1 || cookie.indexOf('sysname') > -1 || cookie.indexOf('redirect') > -1) {
+            if (
+                cookie.indexOf('lang') > -1 
+                || cookie.indexOf('sysname') > -1 
+                || cookie.indexOf('redirect') > -1
+                || cookie.indexOf('vluuid') > -1
+                || cookie.indexOf('vlusrNm') > -1
+            ) {
             continue;
         }
         var eqPos = cookie.indexOf("=");

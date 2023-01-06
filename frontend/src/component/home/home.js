@@ -7,13 +7,20 @@ import RightMenu from '../../component/rightTab/rightMenu';
 import UserListChat from '../../component/pageDefault/chat/userList/userList';
 import store from '../../commonJS/store';
 import ContentChat from '../pageDefault/chat/contentChat/contentChat';
+import { useSelector } from 'react-redux'
 
 export default class Home extends React.Component{
-
     constructor(){
         super();
         this.state = {
-            rowData : []
+            rowData : [
+                {
+                    ssystemNm:'BCC'
+                },
+                {
+                    ssystemNm:'AAA'
+                }
+            ]
         }
     }
     render(){
@@ -27,7 +34,16 @@ export default class Home extends React.Component{
                             {
                                 this.state.rowData.map(x=>{
                                     if(x.ssystemNm.indexOf('.war') == -1){
-                                        return <div className='system' key={x.ssystemNm} onClick={()=>{this.handleClick(x.ssystemNm)}}>{x.ssystemNm}</div>
+                                        let n1 = x.ssystemNm.toLowerCase();
+                                        let n2 = store.getState().commonSlice.searchWar.toLowerCase();
+                                        if(n2 != ""){
+                                            if(n1.indexOf(n2) > -1){
+                                                return <div className='system' key={x.ssystemNm} onClick={()=>{this.handleClick(x.ssystemNm)}}>{x.ssystemNm}</div>
+                                            }
+                                        }else{
+                                            return <div className='system' key={x.ssystemNm} onClick={()=>{this.handleClick(x.ssystemNm)}}>{x.ssystemNm}</div>
+                                        }
+                                        
                                     }
                                 })
                             }
@@ -44,8 +60,9 @@ export default class Home extends React.Component{
     }
 
     componentDidMount(){
-        this.getSystem()
-          
+        // this.getSystem()
+        const commonSlice = useSelector(state => state.commonSlice)
+        console.log(commonSlice)
     }
 
     
