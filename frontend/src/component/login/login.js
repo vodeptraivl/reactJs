@@ -115,6 +115,7 @@ class Login extends React.Component{
 
     success = (usr) =>{
         usr.isLogin = true;
+        usr.userNameFake = store.getState().userInfo.userNameFake;
         store.dispatch(setUserInfo(usr))
         console.log(store.getState().userInfo.uuid) 
         localStorage.setItem('userInfo', JSON.stringify(usr));

@@ -10,53 +10,55 @@ import {  } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 import store from '../../../commonJS/store';
 import { setSearchWar } from '../../../commonJS/commonSlice';
+import { useSelector } from 'react-redux';
 
 library.add(faUser)
-class Header extends React.Component{
-    constructor(){
-        super();
-        this.state = {
-            logout : false,
-            login : false,
-            search:''
-        }
-    }
-    render(){
-        return(
-            <div className='headerTemplate'>
-                <div className='gridHeader'>
-                    <div className='logo'>
-                        <img src={crown} style={{width:'30px'}}></img>
-                    </div>
-                    <div className='headerSearchCtn'>
-                        <input type={'text'} className='searchInput' placeholder='search...' value={this.state.search} onChange={($event)=>{this.change($event)}}></input>
-                    </div>
-                    <div className='infoCtn'>
-                        <div className='userLogo'>
-                            <div className='imgUser'>
-                                {
-                                    store.getState().userInfo.isLogin == true ? <img src={user} style={{width:'40px'}} onClick={this.logout}></img> : <FontAwesomeIcon icon={['fas','fa-user']} style={{color:'#4267B2',fontSize:'18px'}} onClick={() => this.setState({login:true})}/>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    {
-                        this.state.login && <Navigate to={"/dangnhap"}/>
-                    }
-                </div>
-            </div>
-        )
-    }
-
-    logout = () => {
-        localStorage.removeItem("userInfo");
+const Header = () => {
+    const [logout,setLogout] = useState(false);
+    const [login,setLogin] = useState(false);
+    const [search,setSearch] = useState('');
+    const commonSlice = useSelector(state => state.commonSlice) ;
+    const userInfo = useSelector(state => state.userInfo) ;
+    const handleLogout = () => {
+        let usr = userInfo;
+        usr.userName = usr.userNameFake;
+        usr.isLogin = false;
+        localStorage.setItem("userInfo",JSON.stringify(usr));
         window.location.href = "/";
     }
-
-    change = ($e) =>{
-        this.setState({search : $e.target.value})
-        store.dispatch(setSearchWar({searchWar : this.state.search}));
-    }
     
+    const changeName = ($e) => {
+        setSearch($e.target.value)
+        store.dispatch(setSearchWar({searchWar : $e.target.value}));
+    }
+    return(
+        <div className='headerTemplate'>
+            <div className='gridHeader'>
+                <div className='logo'>
+                    <img src={crown} style={{width:'30px'}}></img>
+                </div>
+                <div className='headerSearchCtn'>
+                    <input type={'text'} className='searchInput' placeholder='search...' value={search} onChange={($event)=>{changeName($event)}}></input>
+                </div>
+                <div className='infoCtn'>
+                    <div className='userLogo'>
+                        <div className='imgUser'>
+                            {
+                                userInfo.isLogin == true ? 
+                                <span onClick={handleLogout} style={{'font-size':'13px'}}>{userInfo.userName}</span> : <FontAwesomeIcon icon={['fas','fa-user']} style={{color:'#4267B2',fontSize:'18px'}} onClick={() => setLogin(true)}/>
+                            }
+                        </div>
+                    </div>
+                </div>
+                {
+                    login && <Navigate to={"/dangnhap"}/>
+                }
+            </div>
+        </div>
+    )
+
+   
 }
+
+
 export default Header;

@@ -37,8 +37,11 @@ export default class App  extends React.Component{
       await this.getRandomName()
       userInfo = {
         uuid : this.state.uuid,
-        userName : this.state.userName
+        userNameFake : this.state.userName,
+        userName : this.state.userName,
+        isLogin : false
       }
+      localStorage.setItem("userInfo",JSON.stringify(userInfo));
     }
     store.dispatch(setUserInfo(userInfo));
     store.dispatch(

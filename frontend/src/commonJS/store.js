@@ -1,7 +1,7 @@
 import userInfo from './userInfo';
 import socketSlice from './socketSlice';
 import commonSlice from './commonSlice';
-const { configureStore , getDefaultMiddleware} = require("@reduxjs/toolkit");
+const { configureStore, getDefaultMiddleware,} = require("@reduxjs/toolkit");
 
 const rootReducer = {
     userInfo : userInfo.reducer,

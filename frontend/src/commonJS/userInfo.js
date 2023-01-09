@@ -5,6 +5,7 @@ const userInfo = createSlice({
     initialState: {
         uuid : '',
         userName:'',
+        userNameFake : '',
         isLogin : false
     }, 
     reducers: { 
