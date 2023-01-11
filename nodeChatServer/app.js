@@ -28,15 +28,18 @@ server.listen(process.env.PORT || 2000);
 
 
 var users = [];
-
+var interval;
 io.on('connection',function(socket){
     let auth = socket.handshake.auth;
     auth.idSocket = socket.id;
-    users.push(auth);
-    io.sockets.emit('newUsers',users);
+    if(users.find(x=>(x.idSocket == socket.id || x.name == auth.name)) == null){
+        users.push(auth);
+    }
+    io.sockets.emit('allUsers',users);
     socket.on('disconnect',_=>{
+        console.log('disconect');
         users = users.filter(x=>{return x.idSocket != socket.id});
-        io.sockets.emit('newUsers',users);
+        io.sockets.emit('allUsers',users);
         
     });
     socket.on('getAllUsers',_=>{
@@ -52,7 +55,21 @@ io.on('connection',function(socket){
     socket.on("toUser", (id, msg) => {
         socket.to(id).emit("privateMessage", msg);
     });
+    // interval = setInterval(_=>{
+    //     users = []
+    //     io.sockets.emit('ping',null);
+    // },1000);
+
+    // socket.on('pong',data=>{
+    //     let auth = socket.handshake.auth;
+    //     auth.idSocket = socket.id;
+    //     if(users.find(x=>x.idSocket == socket.id) == null){
+    //         users.push(auth);
+    //         io.sockets.emit('allUsers',users);
+    //     }
+    // });    
 });
+
 
 async function getConnection(){
     let connection;
@@ -116,7 +133,7 @@ app.post('/dangky',async (req, res) => {
         }
     }
     return res.send({ error: true })
-})
+});
 
 async function dangky(usr){
     const connection = await getConnection();

@@ -31,7 +31,7 @@ const Home = ({url}) =>{
         };
     
         loadData();
-      }, []);
+    }, []);
 
     return (
         <div className="App">

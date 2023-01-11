@@ -16,11 +16,11 @@ library.add(faUser)
 const Header = () => {
     const [logout,setLogout] = useState(false);
     const [login,setLogin] = useState(false);
-    const [search,setSearch] = useState('');
     const commonSlice = useSelector(state => state.commonSlice) ;
+    const [search,setSearch] = useState(commonSlice.searchWar);
     const userInfo = useSelector(state => state.userInfo) ;
     const handleLogout = () => {
-        let usr = userInfo;
+        let usr = {...userInfo};
         usr.userName = usr.userNameFake;
         usr.isLogin = false;
         localStorage.setItem("userInfo",JSON.stringify(usr));
@@ -30,6 +30,7 @@ const Header = () => {
     const changeName = ($e) => {
         setSearch($e.target.value)
         store.dispatch(setSearchWar({searchWar : $e.target.value}));
+        localStorage.setItem('searchName',$e.target.value)
     }
     return(
         <div className='headerTemplate'>
@@ -38,14 +39,14 @@ const Header = () => {
                     <img src={crown} style={{width:'30px'}}></img>
                 </div>
                 <div className='headerSearchCtn'>
-                    <input type={'text'} className='searchInput' placeholder='search...' value={search} onChange={($event)=>{changeName($event)}}></input>
+                    <input type={'text'} className='searchInput' placeholder='search system name ...' value={search} onChange={($event)=>{changeName($event)}}></input>
                 </div>
                 <div className='infoCtn'>
                     <div className='userLogo'>
                         <div className='imgUser'>
                             {
                                 userInfo.isLogin == true ? 
-                                <span onClick={handleLogout} style={{'font-size':'13px'}}>{userInfo.userName}</span> : <FontAwesomeIcon icon={['fas','fa-user']} style={{color:'#4267B2',fontSize:'18px'}} onClick={() => setLogin(true)}/>
+                                <span onClick={handleLogout} style={{'fontSize':'13px'}}>{userInfo.userName}</span> : <FontAwesomeIcon icon={['fas','fa-user']} style={{color:'#4267B2',fontSize:'18px'}} onClick={() => setLogin(true)}/>
                             }
                         </div>
                     </div>

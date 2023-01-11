@@ -1,4 +1,29 @@
 
+import { useEffect, useRef } from "react";
+
+export const useComponentDidMount = handler => {
+  return useEffect(() => handler(), []);
+};
+
+export const useComponentDidUpdate = (handler, deps) => {
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+
+      return;
+    }
+
+    return handler();
+  }, deps);
+};
+
+export const useComponentWillUnmount = handler => {
+  return useEffect(() => handler, []);
+};
+
+
 export function setCookie(nameCookie, data) {
     // Build the expiration date string:
     var expiration_date = new Date();

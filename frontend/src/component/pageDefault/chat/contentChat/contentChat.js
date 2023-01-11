@@ -1,67 +1,68 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './contentChat.css';
 import store from '../../../../commonJS/store';
-export default class ContentChat extends React.Component{
-    constructor(){
-        super();
-        this.state = {
-            message:'',
-            mess : [],
-            id:''
-        }
-    }
-    render(){
-        return(
-            <div className='gridPad'>
-                <div className='containerChatContent'>
-                    {
-                        this.state.mess.map((x,i)=>{
-                            return <div className={x.auth.id == this.state.id ? 'messageItem right' : 'messageItem left'} key={x.auth.id+i}>
-                                <div className={x.auth.id == this.state.id ? 'right' : 'left'}>
-                                    {x.auth.id == this.state.id ? '' : <div className='otherUser'>{x.auth.name}</div>}{x.message}
-                                </div>
-                                    
-                            </div>
-                        })
-                    }
-                </div>
-                <div className='inputS'>
-                    <input type={'text'} value={this.state.message} onKeyDown={($event)=>{this.change($event)}} onChange={($event)=>{this.change($event)}}></input>
-                    <button className='send' onClick={this.sendMessage}>send</button>
-                </div>
-            </div>
-        )
-    }
+import { useSelector } from 'react-redux';
+import {useComponentDidMount} from '../../../../commonJS/common';
 
-    sendMessage =()=>{
-        if(this.state.message != ""){
-            store.getState().socketSlice.sk.emit('sendMessage',this.state.message);
-            this.setState({message:''});
+const ContentChat = () =>{
+    const [message , setMessage] = useState('');
+    const [messList , setMessList] = useState([]);
+    // const skSlice = useSelector(state => state.socketSlice)
+    const first = true;
+    const sendMessage =()=>{
+        if(message != ""){
+            store.getState().socketSlice.sk.emit('sendMessage',message);
+            setMessage('');
         }
     }
 
-    change = ($e) =>{
-        
-        this.setState({message : $e.target.value})
+    const change = ($e) =>{
+        setMessage($e.target.value);
         if ($e._reactName == "onKeyDown" && $e.key === 'Enter') {
-            this.sendMessage();
+            sendMessage();
         }
     }
-
-    componentDidMount(){
-        this.init(store.getState().socketSlice.sk);
+    const setMessageReveice = (data) => {
+        setMessList([...messList,...[data]]);
     }
-
-    init = (sk) =>{
-        if(sk){
-            this.setState({id:store.getState().socketSlice.id})
-          sk.on('newMessage',data=>{
-            let old = this.state.mess;
-            old.push(data);
-            this.setState({mess:old})
-          })
+    
+    const init = () =>{
+        if(store.getState().socketSlice.sk){
+            store.getState().socketSlice.sk.on('newMessage',data=>{
+                setMessageReveice(data);
+            })
         }else{
-            setTimeout(x=>{this.init(store.getState().socketSlice.sk)},200)
+            setTimeout(x=>{init()},200)
         }
     }
+    
+    useEffect(() => {
+        init();
+        return () => {
+            store.getState().socketSlice.sk.off('newMessage');
+        }
+    }, [messList]);
+    return(
+        <div className='gridPad'>
+            <div></div>
+            <div className='containerChatContent'>
+                {
+                    messList.map((x,i)=>
+                        <div className={x.auth.id == store.getState().socketSlice.id ? 'messageItem right' : 'messageItem left'} key={x.auth.id+i}>
+                            <div className={x.auth.id == store.getState().socketSlice.id ? 'right' : 'left'}>
+                                {x.auth.id == store.getState().socketSlice.id ? '' : <div className='otherUser'>{x.auth.name}</div>}{x.message}
+                            </div>
+                                
+                        </div>
+                    )
+                }
+            </div>
+            <div className='inputS'>
+                <input type={'text'} value={message} onKeyDown={($event)=>{change($event)}} onChange={($event)=>{change($event)}}></input>
+                <button className='send' onClick={sendMessage}>send</button>
+            </div>
+        </div>
+    )
 }
+
+export default ContentChat;

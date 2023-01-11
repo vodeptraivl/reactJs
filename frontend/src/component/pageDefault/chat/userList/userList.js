@@ -40,7 +40,7 @@ class UserListChat extends React.Component{
            sk.on('users',data=>{
             this.setState({dataUser : data});
           });
-          sk.on('newUsers',data=>{
+          sk.on('allUsers',data=>{
             this.setState({dataUser : data});
           })
         }else{

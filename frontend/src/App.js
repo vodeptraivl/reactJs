@@ -13,6 +13,7 @@ import store from './commonJS/store';
 import {setSK,setID} from './commonJS/socketSlice';
 import {setUserInfo} from './commonJS/userInfo';
 import axios from 'axios';
+import { setSearchWar } from './commonJS/commonSlice';
 
 export default class App  extends React.Component{
   constructor(){
@@ -44,19 +45,39 @@ export default class App  extends React.Component{
       localStorage.setItem("userInfo",JSON.stringify(userInfo));
     }
     store.dispatch(setUserInfo(userInfo));
-    store.dispatch(
-      setSK(
-          io(store.getState().socketSlice.urlSocket,
-            {
-              path:'/vola/chat',
-              timeout:9999999,
-              auth:{id: store.getState().userInfo.uuid ,name:store.getState().userInfo.userName},
-              transports : ['websocket']
-            }
+    if(store.getState().socketSlice.sk == null){
+      store.dispatch(setID(userInfo.uuid))
+      store.dispatch(
+        setSK(
+            io(store.getState().socketSlice.urlSocket,
+              {
+                path:'/vola/chat',
+                timeout:9999999,
+                auth:{id: store.getState().userInfo.uuid ,name:store.getState().userInfo.userName},
+                transports : ['websocket']
+              }
+            )
           )
-        )
       );
+    }
+    
+
+    let searchName = localStorage.getItem('seachName') || '';
+    store.dispatch(setSearchWar({searchWar : searchName}));
+    this.init(store.getState().socketSlice.sk)
   }
+
+  init = (sk) =>{
+    if(sk){
+       sk.on('ping',data=>{
+        sk.emit("pong",)
+      });
+      
+    }else{
+        setTimeout(x=>{this.init(store.getState().socketSlice.sk)},200)
+    }
+}
+
   render(){
     return (
       <div className="App">
