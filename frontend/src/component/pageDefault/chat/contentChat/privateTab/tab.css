@@ -1,0 +1,61 @@
+.tabContainer{
+    height: 30px;
+    width: 100%;
+    border: 1px solid #cecece;
+    border-bottom: 0;
+    border-radius: 5px 5px 0 0;
+    text-align: left;
+    display: flex;
+}
+.tab{
+    max-width: 150px;
+    padding: 0 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    line-height: 30px;
+    border-right: 1px solid #cecece;
+    border-radius: 0px 5px 0 0;
+    user-select: none;
+    cursor: pointer;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    border-bottom: 1px solid #cecece;
+    
+    position: relative;
+}
+.tab.active{
+    color: black;
+    background: white;
+    border-bottom: 1px solid white;
+}
+.close{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    color: #adadad;
+    border-radius: 50%;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ctnMess{
+    background: red;
+    position: absolute;
+    left: 2px;
+    top: calc(50% + 2px);
+    transform: translateY(-50%);
+    font-size: 9px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    color: white;
+    border-radius: 50%;
+}

@@ -1,12 +1,12 @@
 .containerChatContent{
     width: 100%;
-    height: calc(100% - 35px);
+    height: calc(100% - 70px);
     padding: 10px;
-    box-shadow: inset 0px 0px 3px #cecece;
     border: 1px solid #cecece;
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     overflow: hidden;
     overflow-y: auto;
+    border-radius: 0 0 5px 5px
 }
 .gridPad{
     width: 100%;

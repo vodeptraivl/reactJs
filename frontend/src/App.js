@@ -14,6 +14,7 @@ import {setSK,setID} from './commonJS/socketSlice';
 import {setUserInfo} from './commonJS/userInfo';
 import axios from 'axios';
 import { setSearchWar } from './commonJS/commonSlice';
+import { setCurrentTab } from './commonJS/messageControllSlice';
 
 export default class App  extends React.Component{
   constructor(){
@@ -49,7 +50,7 @@ export default class App  extends React.Component{
       store.dispatch(setID(userInfo.uuid))
       store.dispatch(
         setSK(
-            io(store.getState().socketSlice.urlSocket,
+            await io(store.getState().socketSlice.urlSocket,
               {
                 path:'/vola/chat',
                 timeout:9999999,

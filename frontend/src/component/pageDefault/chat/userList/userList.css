@@ -34,6 +34,7 @@
     padding: 0 5px;
     align-items: center;
     cursor: pointer;
+    position: relative;
 }
 
 .itemChat:hover{

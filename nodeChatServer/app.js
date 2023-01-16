@@ -32,25 +32,36 @@ var interval;
 io.on('connection',function(socket){
     let auth = socket.handshake.auth;
     auth.idSocket = socket.id;
-    if(users.find(x=>(x.idSocket == socket.id || x.name == auth.name)) == null){
+    let usr = users.findIndex(x=> {return(x.id == auth.id || x.name == auth.name)});
+    if(usr == -1){
         users.push(auth);
+    }else{
+        users[i].idSocket = socket.id;
     }
     io.sockets.emit('allUsers',users);
     socket.on('disconnect',_=>{
-        console.log('disconect');
-        users = users.filter(x=>{return x.idSocket != socket.id});
+        users = users.filter(x=>{return x.id != auth.id});
         io.sockets.emit('allUsers',users);
         
     });
     socket.on('getAllUsers',_=>{
         socket.emit('users',users);
     });
-    socket.on('sendMessage',(message)=>{
-        io.sockets.emit('newMessage',{auth,message})
-    });
 
-    socket.on('toUser',(message)=>{
-        io.sockets.emit('newMessage',{auth,message})
+    socket.on('sendMessage',(content)=>{
+        if(content.idSk){
+            let private = {
+                auth,
+                message:content.message,
+                usrFrom : content.usrFrom,
+                from:content.from,
+                to : content.id
+            }
+            socket.emit('newMessageForMe',private)
+            socket.to(content.idSk).emit("newPrivateMessage",private);
+        }else{
+            io.sockets.emit('newMessage',{auth,message:content.message,to:'market',usrFrom:'market'})
+        }
     });
     socket.on("toUser", (id, msg) => {
         socket.to(id).emit("privateMessage", msg);
